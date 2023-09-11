@@ -1,40 +1,50 @@
-const inquirer = require('inquirer');
-const fs = require('fs');
-const { generateLogo } = require('./generateLogo');
+// packages used
+const inquirer = require(`inquirer`);
+const fs = require(`fs`);
+const { generateLogo } = require('./lib /generateLogo');
 
-inquirer.prompt([
+
+
+// User input for logo name, text color, shape and shape color.
+const questions = () => {
+    return inquirer.prompt([
 
         {
             type: 'input',
-            name: 'text',
-            message: 'Please enter 3 letters for the text of the logo:',
+            message: 'Please enter up to 3 letters for the text of the logo:',
+            name: 'text', 
         },
         {
             type: 'list',
-            name: 'textColor',
-            message: 'Please select a text color:',
-            choices: ['White', 'Black', '']
+            message: 'Please select the color for your text:',
+            choices: ['White', 'Red', 'Yellow'],
+            name: 'textColor',  
         },
         {
             type: 'list',
-            name: 'shape',
             message: 'Please select the shape of your logo:',
             choices: ['Circle', 'Triangle', 'Square'],
+            name: 'shape',   
         },
         {
             type: 'list',
-            name: 'shapeColor',
             message: 'Please select the color of your logo:',
             choices: ['Green', 'Black', 'Gray'],
+            name: 'shapeColor',  
         },
 
-    ]);
-
-    inquirer.prompt(questions).then((answers) => {
-        const svg = generateLogo(answers.text, answers.textColor, answers.shape, answers.shapeColor);
-        fs.writeFileSync('newLogo.svg', svg);
+    ])
+    .then((answers) => {
+      // using the generateLogo function in separate file to take in user inputs, create shape and text and generate an svg logo file to be saved as newLogo file
+      const svg = generateLogo(answers.text, answers.textColor, answers.shape, answers.shapeColor);
+      fs.writeFile('newLogo.svg', svg, (err) => {
+        if (err) throw err;
         console.log('Generated newLogo.svg');
+      });
     });
+  };
 
 
-// generateLogo();
+
+questions();
+

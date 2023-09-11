@@ -1,4 +1,4 @@
-
+// constructor function to define shape and its color
 class Shape {
     constructor() {
       this.color = "";
@@ -8,7 +8,7 @@ class Shape {
       }
     }
 
-
+// Circle, Triangle and Square classes (and properties inherited from the shape class)
 class Circle extends Shape {
     render() {
       return `<circle cx="50" cy="50" r="100" fill="${this.color}" />`;
@@ -27,4 +27,4 @@ class Circle extends Shape {
     }
   } 
 
-  module.exports = { Triangle, Square, Circle };
+  module.exports = { Circle, Triangle, Square };
