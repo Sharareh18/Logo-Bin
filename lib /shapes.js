@@ -15,7 +15,7 @@ class Circle extends shape {
     this.color = color;
   }
   render() {
-    return `<circle cx="100" cy="100" r="50" fill="${this.color}" />`;
+    return `<circle cx="150" cy="115" r="80" fill="${this.color}" />`;
   }
 };
 
@@ -25,7 +25,8 @@ class Triangle extends shape {
     this.color = color;
   }
   render() {
-    return `<polygon points="100,50 50,150 150,150" fill="${this.color}" />`;
+    console.log(`Rendering circle with color: ${this.color}`);
+    return `<polygon points="150,18 244,182 56,182" fill="${this.color}" />`;
   }
 };
 
@@ -35,7 +36,7 @@ class Square extends shape {
     this.color = color;
   }
   render() {
-    return `<rect x="50" y="50" width="100" height="100" fill="${this.color}" />`;
+    return `<rect x="73" y="40" width="160" height="160" fill="${this.color}" />`;
   }
 };
 

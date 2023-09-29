@@ -4,42 +4,42 @@ const fs = require(`fs`);
 const { Circle, Triangle, Square } = require('./lib /shapes');
 
 
-// it's got to be a render method not setting the fill attribute right or 
-// the color is not being passed in correctly or createShape isn't returning
-// the shape markup/color or generateLogo isn't passing the shape and color into 
-// createShape right....
-
+// function to generate logo, using user input to create an svg file
 function generateLogo(text, textColor, shape, shapeColor) {
-  const svg = `<svg width="300" height="200">${createText(text, textColor)}${createShape(shape, shapeColor)}</svg>`;
+  const svg = `<svg width="300" height="200"><g>${createShape(shape, shapeColor)}${createText(text, textColor)}</g></svg>`;
   return svg;
+ 
+};
+// funciton to generate text based on user input to be used in the generateLogo funciton to create svg file
+function createText(text, textColor) {
+  return `<text x="150" y="130" text-anchor="middle" fill="${textColor}" font-size="35">${text}</text>`;
 };
 
 
-
+// Using user input to create the shape of their choice, adding the chosen color and rendering the shape.  
 const createShape = (shape, shapeColor) => {
+  console.log(`Shape: ${shape}`);
   let shapeType;
   switch (shape) {
     case "circle":
       shapeType = new Circle(shapeColor);
-      // return circle.render();
+      console.log(`Creating circle with color: ${shapeColor}`);
       break;
     case "triangle":
       shapeType = new Triangle(shapeColor);
-      // return triangle.render();
+      console.log(`Creating triangle with color: ${shapeColor}`);
       break;
-    default:
+    case "square":
       shapeType = new Square(shapeColor);
-      // return square.render();
+      console.log(`Creating square with color: ${shapeColor}`);
       break;
+      default:
+        throw new Error(`Invalid shape: ${shape}`);
   }
+  
   let sh = shapeType.render()
   return sh;
-};
-
-
-
-function createText(text, textColor) {
-  return `<text x="125" y="125" fill="${textColor}" font-size="35">${text}</text>`;
+  
 };
 
 
@@ -61,7 +61,7 @@ const questions = () => {
     {
       type: 'list',
       message: 'Please select the shape of your logo:',
-      choices: ['Circle', 'Triangle', 'Square'],
+      choices: ['circle', 'triangle', 'square'],
       name: 'shape',
     },
     {
@@ -74,7 +74,6 @@ const questions = () => {
   ])
     .then((answers) => {
       const logo = generateLogo(answers.text, answers.textColor, answers.shape, answers.shapeColor);
-      // const shape = createShape(answers.shape, answers.shapeColor);
       fs.writeFile('newLogo.svg', logo, (err) => {
         if (err) throw err;
         console.log('Generated newLogo.svg');
